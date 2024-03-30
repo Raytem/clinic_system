@@ -1,0 +1,61 @@
+title Clinic DB schema
+
+User [icon: user] {
+  id int pk
+  email string
+  firstName string
+  lastName string
+  patronymic string
+  phoneNumber string
+  birthDate date
+  sex int // 1-male, 2-female
+  roles int[] // 1-patient, 2-doctor
+}
+
+Doctor [icon:doctor] {
+  id int pk
+  user_id int fk
+  specialty string
+  careerStartDate date
+}
+
+Patient [icon:user] {
+  id int pk
+  user_id int fk
+  address string
+}
+
+Recipe [icon:pill] {
+  id: int pk
+  patient_id int fk
+  doctor_id int fk
+  drugName string
+  instructionForUsage string
+}
+
+Schedule [icon:calendar] {
+  id int pk
+  doctor_id int fk
+  weekDay: int
+  startTime time
+  endTime time
+  avgAppointmentTime time
+}
+
+AppointmentRecord [icon:calendar] {
+  id int pk
+  doctor_id int fk
+  patient_id int fk
+  dateTime datetime
+}
+
+Patient.user_id - User.id
+Doctor.user_id - User.id
+Schedule.doctor_id > Doctor.id
+AppointmentRecord.doctor_id > Doctor.id
+AppointmentRecord.Patient_id > Patient.id
+Recipe.doctor_id > Doctor.id
+Recipe.patient_id > Patient.id
+
+
+
