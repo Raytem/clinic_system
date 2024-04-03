@@ -1,5 +1,6 @@
 {
   "compilerOptions": {
+    "baseUrl": "./src",
     "lib": ["dom", "dom.iterable", "esnext"],
     "allowJs": true,
     "skipLibCheck": true,
@@ -18,9 +19,20 @@
       }
     ],
     "paths": {
-      "components/*": ["./src/components*"]
+      "@/components/*": ["components/*"],
+      "@/app/*": ["app/*"],
+      "@/stores/*": ["stores/*"],
+      "@/interfaces/*": ["interfaces/*"],
+      "@/enums/*": ["enums/*"],
+      "@/services/*": ["services/*"],
+      "@/utils/*": ["utils/*"],
+      "@/constants/*": ["constants/*"],
+      "@/hooks/*": ["hooks/*"],
+      "@/providers/*": ["providers/*"],
+      "@/validation-schemas/*": ["validation-schemas/*"]
+      
     }
   },
-  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+  "include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts", "src/components/Appointment.tsx"],
   "exclude": ["node_modules"]
 }

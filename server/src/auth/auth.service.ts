@@ -12,6 +12,7 @@ import { PatientService } from 'src/realizations/patient/patient.service';
 import { DataSource, QueryRunner } from 'typeorm';
 import { ScheduleService } from 'src/realizations/schedule/schedule.service';
 import { Role } from '../enums/role.enum';
+import { UserEntity } from 'src/realizations/user/entities/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -36,10 +37,18 @@ export class AuthService {
     const roles = [Role.PATIENT];
 
     let user;
-    await this.dataSource.manager.transaction(async (transactionalEntityManager) => {
-      user = await this.userService.create({ ...signupAsPatientDto, password, roles }, transactionalEntityManager);
-      await this.patientService.create({ address: signupAsPatientDto.address, user }, transactionalEntityManager);
-    });
+    await this.dataSource.manager.transaction(
+      async (transactionalEntityManager) => {
+        user = await this.userService.create(
+          { ...signupAsPatientDto, password, roles },
+          transactionalEntityManager,
+        );
+        await this.patientService.create(
+          { address: signupAsPatientDto.address, user },
+          transactionalEntityManager,
+        );
+      },
+    );
 
     const accessToken = this.jwtService.generateAccessToken(user.id);
 
@@ -49,18 +58,33 @@ export class AuthService {
     };
   }
 
-  async signupAsDoctor(signupAsDoctorDto: SignupAsDoctorDto): Promise<UserWithTokenDto> {
+  async signupAsDoctor(
+    signupAsDoctorDto: SignupAsDoctorDto,
+  ): Promise<UserWithTokenDto> {
     const password = await bcrypt.hash(signupAsDoctorDto.password, 5);
     const roles = [Role.DOCTOR];
 
     let user;
-    await this.dataSource.manager.transaction(async (transactionalEntityManager) => {
-      user = await this.userService.create({ ...signupAsDoctorDto, password, roles }, transactionalEntityManager);
-      const doctor = await this.doctorService.create({ ...signupAsDoctorDto, user }, transactionalEntityManager);
+    await this.dataSource.manager.transaction(
+      async (transactionalEntityManager) => {
+        user = await this.userService.create(
+          { ...signupAsDoctorDto, password, roles },
+          transactionalEntityManager,
+        );
+        const doctor = await this.doctorService.create(
+          { ...signupAsDoctorDto, user },
+          transactionalEntityManager,
+        );
 
-      const scheduleWithDoctor = signupAsDoctorDto.schedule.map(schedule => ({ ...schedule, doctor }));
-      await this.scheduleService.createMany(scheduleWithDoctor, transactionalEntityManager);
-    });
+        const scheduleWithDoctor = signupAsDoctorDto.schedule.map(
+          (schedule) => ({ ...schedule, doctor }),
+        );
+        await this.scheduleService.createMany(
+          scheduleWithDoctor,
+          transactionalEntityManager,
+        );
+      },
+    );
 
     const accessToken = this.jwtService.generateAccessToken(user.id);
     return {
@@ -82,6 +106,16 @@ export class AuthService {
 
     const accessToken = this.jwtService.generateAccessToken(user.id);
 
+    return {
+      user,
+      accessToken,
+    };
+  }
+
+  async refresh(reqUser: UserEntity): Promise<UserWithTokenDto> {
+    const user = await this.userService.findOne({ id: reqUser.id });
+    const accessToken = this.jwtService.generateAccessToken(user.id);
+    
     return {
       user,
       accessToken,

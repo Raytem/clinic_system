@@ -8,6 +8,11 @@ async function bootstrap() {
   const config = app.get(ConfigService);
   const port = +config.get<string>('APP_PORT');
 
+  app.enableCors({
+    origin: '*',
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+  });
+
   configureSwagger(app);
 
   await app.listen(port);
