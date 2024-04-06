@@ -38,11 +38,7 @@ const LoginForm = observer(() => {
 
             userStore.setUser(user);
 
-            if (user.roles[0] === Role.DOCTOR) {
-                router.push('/doctor/appointments')
-            } else if (user.roles[0] === Role.PATIENT) {
-                router.push('/doctors')
-            }
+            router.push('/appointments')
         } catch (e) {
             setError('root', {
                 message: e?.response?.data.message,

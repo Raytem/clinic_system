@@ -40,7 +40,7 @@ const PatientSignupForm = observer(() => {
           accessTokenUtil.set(userWithToken.accessToken);
 
           userStore.setUser(user);
-          router.push('/doctors')
+          router.push('/appointments')
       } catch (e) {
           setError('root', {
               message: e?.response?.data.message,

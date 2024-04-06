@@ -52,23 +52,15 @@ export class AppointmentRecordController {
     isArray: true,
     status: HttpStatus.OK,
   })
-  @ApiOperation({ summary: 'DOCTOR' })
-  @Roles([Role.DOCTOR])
-  @Get('doctor')
-  async findByDoctor(@User() user: UserEntity) {
-    return this.appointmentRecordService.findByDoctor(user);
-  }
-
-  @ApiResponse({
-    type: AppointmentRecordEntity,
-    isArray: true,
-    status: HttpStatus.OK,
-  })
-  @ApiOperation({ summary: 'PATIENT' })
-  @Roles([Role.PATIENT])
-  @Get('patient')
-  async findByPatient(@User() user: UserEntity) {
-    return this.appointmentRecordService.findByPatient(user);
+  @ApiOperation({ summary: 'DOCTOR, PATIENT' })
+  @Roles([Role.DOCTOR, Role.PATIENT])
+  @Get()
+  async findByDoctorOrDoctor(@User() user: UserEntity) {
+    if (user.roles.includes(Role.DOCTOR)) {
+      return this.appointmentRecordService.findByDoctor(user);
+    } else if (user.roles.includes(Role.PATIENT)) {
+      return this.appointmentRecordService.findByPatient(user);
+    }
   }
 
   @ApiResponse({ type: AppointmentRecordEntity, status: HttpStatus.OK })

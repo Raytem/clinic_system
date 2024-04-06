@@ -16,7 +16,34 @@ class AppointmentService {
              }
         );
         const appointment: AppointmentRecord = res.data;
-        console.log(appointment)
+
+        return appointment;
+    }
+
+    async getAll(): Promise<AppointmentRecord[]> {
+        const res = await axios.get(
+            `${process.env.NEXT_PUBLIC_SERVER_URL}/appointment_record`,
+             {
+                headers: {
+                    Authorization: accessTokenUtil.getBearerString(),
+                }
+             }
+        );
+        const appointments: AppointmentRecord[] = res.data;
+
+        return appointments;
+    }
+
+    async delete(id: number): Promise<AppointmentRecord> {
+        const res = await axios.delete(
+            `${process.env.NEXT_PUBLIC_SERVER_URL}/appointment_record/${id}`,
+             {
+                headers: {
+                    Authorization: accessTokenUtil.getBearerString(),
+                }
+             }
+        );
+        const appointment: AppointmentRecord = res.data;
 
         return appointment;
     }

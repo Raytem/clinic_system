@@ -1,6 +1,7 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsDateString, IsString } from 'class-validator';
 import { AbstractEntity } from 'src/realizations/abstract.entity';
+import { RecipeEntity } from 'src/realizations/recipe/entities/recipe.entity';
 import { ScheduleEntity } from 'src/realizations/schedule/entities/schedule.entity';
 import { UserEntity } from 'src/realizations/user/entities/user.entity';
 import { Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
@@ -27,4 +28,7 @@ export class DoctorEntity extends AbstractEntity {
     eager: true,
   })
   schedule: ScheduleEntity[];
+
+  @OneToMany(() => RecipeEntity, (recipe) => recipe.doctor)
+  recipes: RecipeEntity[];
 }

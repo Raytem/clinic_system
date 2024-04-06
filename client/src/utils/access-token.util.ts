@@ -3,6 +3,7 @@ import { LocalStorageItem } from "@/enums/LocalStorageItem";
 class AccessTokenUtil {
     set(value: string): void {
         localStorage.setItem(LocalStorageItem.ACCESS_TOKEN, value);
+        
     }
 
     get(): string | null {

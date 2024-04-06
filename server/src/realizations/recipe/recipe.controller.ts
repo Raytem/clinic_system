@@ -56,7 +56,7 @@ export class RecipeController {
   @ApiOperation({ summary: 'DOCTOR' })
   @Roles([Role.DOCTOR])
   @Get('doctor')
-  async findByDoctor(
+  async findByDoctorOrPatient(
     @User() user: UserEntity,
     @Query() doctorFilter: DoctorRecipeFilterDto,
   ) {

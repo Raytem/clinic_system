@@ -13,6 +13,8 @@ An application for managing a medical clinic, including a database for the patie
     - Rect-bootstrap
 
 ## Running
+Go to the project directory, and use next commands to run app:
+
 ### Backend:
 ```bash
 # go to the server directory

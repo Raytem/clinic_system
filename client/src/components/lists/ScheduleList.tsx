@@ -1,6 +1,6 @@
 import { Schedule } from '@/interfaces/schedule/schedule'
 import React from 'react'
-import ScheduleItem from '../schedule-item/ScheduleItem'
+import ScheduleItem from '../items/schedule-item/ScheduleItem'
 import ListGroup from 'react-bootstrap/ListGroup';
 
 interface ScheduleListProps {

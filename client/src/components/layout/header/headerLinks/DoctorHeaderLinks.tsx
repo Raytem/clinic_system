@@ -14,11 +14,8 @@ const DoctorHeaderLinks = observer(() => {
               {`Droctor: ${userStore.user.lastName} ${userStore.user.firstName}`}
           </Nav.Link>
           <Nav.Link as="span">
-              <Link className="text-link" href='/doctor/appointments'>Appointments</Link>
+              <Link className="text-link" href='/appointments'>Appointments</Link>
           </Nav.Link>
-          {/* <Nav.Link as="span">
-              <Link className="text-link" href='patient/recipes'>Recipes</Link>
-          </Nav.Link> */}
       </>
     )
   })

@@ -1,8 +1,9 @@
 import { ApiProperty } from '@nestjs/swagger';
 import { IsString } from 'class-validator';
 import { AbstractEntity } from 'src/realizations/abstract.entity';
+import { RecipeEntity } from 'src/realizations/recipe/entities/recipe.entity';
 import { UserEntity } from 'src/realizations/user/entities/user.entity';
-import { Column, Entity, JoinColumn, OneToOne } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany, OneToOne } from 'typeorm';
 
 @Entity('Patient')
 export class PatientEntity extends AbstractEntity {
@@ -15,4 +16,7 @@ export class PatientEntity extends AbstractEntity {
   @OneToOne(() => UserEntity, { eager: true, onDelete: 'CASCADE' })
   @JoinColumn({ name: 'user_id' })
   user: UserEntity;
+
+  @OneToMany(() => RecipeEntity, (recipe) => recipe.patient)
+  recipes: RecipeEntity[];
 }
