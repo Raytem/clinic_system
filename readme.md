@@ -36,5 +36,8 @@ $ cd client
 $ npm install
 
 # execute app
-$ npm start dev
+$ npm run dev
 ```
+
+## API Documentation
+http://localhost:80/api

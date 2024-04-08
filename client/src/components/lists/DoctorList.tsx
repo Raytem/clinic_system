@@ -1,6 +1,6 @@
 import { Doctor } from '@/interfaces/doctor/doctor'
 import React from 'react'
-import Card from 'react-bootstrap/Card';
+import { Alert } from 'react-bootstrap'
 import DoctorItem from '../items/doctor-item/DoctorItem';
 
 interface DoctorListProps {
@@ -10,11 +10,9 @@ interface DoctorListProps {
 const DoctorList: React.FC<DoctorListProps> = ({ doctors }) => {
     if (!doctors.length) {
         return (
-            <Card>
-                <Card.Body>
-                    No doctors found
-                </Card.Body>
-            </Card>
+            <Alert variant='light'>
+                No doctors found
+            </Alert>
         )
     }
 
